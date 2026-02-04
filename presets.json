@@ -23,5 +23,10 @@ json
     "model": "flux",
     "enhancePrompt": "minimalist art, clean lines, simple composition, flat design, vector style, solid colors",
     "negativePrompt": "complex, detailed, cluttered, realistic, 3d"
+  }"gaya-baru": {
+    "name": "🏷️ Nama Tampilan",
+    "model": "flux",
+    "enhancePrompt": "kata kunci yang ditambahkan ke prompt",
+    "negativePrompt": "yang dihindari"
   }
 }
