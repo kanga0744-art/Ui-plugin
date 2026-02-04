@@ -1,0 +1,27 @@
+json
+{
+  "realistic": {
+    "name": "📸 Realistic (Foto Realistis)",
+    "model": "flux",
+    "enhancePrompt": "photorealistic, 8k, highly detailed, professional photography, sharp focus",
+    "negativePrompt": "cartoon, anime, illustration, painting, drawing, sketch, 3d render"
+  },
+  "anime": {
+    "name": "🎌 Anime Style",
+    "model": "flux",
+    "enhancePrompt": "anime style, manga illustration, vibrant colors, detailed anime art, studio ghibli inspired",
+    "negativePrompt": "photorealistic, 3d render, western cartoon, realistic"
+  },
+  "cyberpunk": {
+    "name": "🌃 Cyberpunk",
+    "model": "flux",
+    "enhancePrompt": "cyberpunk style, neon lights, futuristic city, dystopian, blade runner aesthetic, holographic",
+    "negativePrompt": "nature, countryside, vintage, historical"
+  },
+  "minimalist": {
+    "name": "⬜ Minimalist Art",
+    "model": "flux",
+    "enhancePrompt": "minimalist art, clean lines, simple composition, flat design, vector style, solid colors",
+    "negativePrompt": "complex, detailed, cluttered, realistic, 3d"
+  }
+}
