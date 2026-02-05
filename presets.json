@@ -1,32 +1,52 @@
-json
-{
-  "realistic": {
-    "name": "📸 Realistic (Foto Realistis)",
-    "model": "flux",
-    "enhancePrompt": "photorealistic, 8k, highly detailed, professional photography, sharp focus",
-    "negativePrompt": "cartoon, anime, illustration, painting, drawing, sketch, 3d render"
-  },
-  "anime": {
-    "name": "🎌 Anime Style",
-    "model": "flux",
-    "enhancePrompt": "anime style, manga illustration, vibrant colors, detailed anime art, studio ghibli inspired",
-    "negativePrompt": "photorealistic, 3d render, western cartoon, realistic"
-  },
-  "cyberpunk": {
-    "name": "🌃 Cyberpunk",
-    "model": "flux",
-    "enhancePrompt": "cyberpunk style, neon lights, futuristic city, dystopian, blade runner aesthetic, holographic",
-    "negativePrompt": "nature, countryside, vintage, historical"
-  },
-  "minimalist": {
-    "name": "⬜ Minimalist Art",
-    "model": "flux",
-    "enhancePrompt": "minimalist art, clean lines, simple composition, flat design, vector style, solid colors",
-    "negativePrompt": "complex, detailed, cluttered, realistic, 3d"
-  }"gaya-baru": {
-    "name": "🏷️ Nama Tampilan",
-    "model": "flux",
-    "enhancePrompt": "kata kunci yang ditambahkan ke prompt",
-    "negativePrompt": "yang dihindari"
+// --- FILE PLUGIN / CONFIGURATION ---
+// File ini dimuat di HEAD, jadi pasti tersedia saat aplikasi berjalan.
+
+window.APP_CONFIG = {
+  // Versi Plugin
+  version: "2.0",
+  
+  // Pesan sambutan di Console
+  welcomeMessage: "Plugin Preset Berhasil Dimuat!",
+
+  // Daftar Gaya Gambar (Presets)
+  presets: {
+    "realistic": {
+      "name": "📸 Realistic (Foto Asli)",
+      "model": "flux",
+      "enhancePrompt": "photorealistic, 8k, highly detailed, professional photography, sharp focus, canon r5, natural lighting, raw photo",
+      "negativePrompt": "cartoon, anime, illustration, painting, drawing, sketch, 3d render, blurry, deformed, low quality, text, watermark"
+    },
+    "anime": {
+      "name": "🎌 Anime / Manga",
+      "model": "flux",
+      "enhancePrompt": "anime style, manga illustration, vibrant colors, detailed anime art, studio ghibli inspired, makoto shinkai style, high quality",
+      "negativePrompt": "photorealistic, 3d render, western cartoon, realistic, low quality, bad anatomy, ugly"
+    },
+    "disney": {
+      "name": "🧚 Disney / Pixar 3D",
+      "model": "flux",
+      "enhancePrompt": "pixar style, disney animation, 3d render, cute, expressive, unreal engine 5, soft lighting, detailed texture",
+      "negativePrompt": "2d, anime, rough sketch, scary, dark, realistic photo"
+    },
+    "cyberpunk": {
+      "name": "🌃 Cyberpunk Neon",
+      "model": "flux",
+      "enhancePrompt": "cyberpunk style, neon lights, futuristic city, dystopian, blade runner aesthetic, holographic, high contrast, cinematic",
+      "negativePrompt": "nature, countryside, vintage, historical, dull, daylight, rustic"
+    },
+    "painting": {
+      "name": "🎨 Oil Painting",
+      "model": "flux",
+      "enhancePrompt": "oil painting, classic art, textured strokes, van gogh style, artistic, masterpiece, canvas texture, thick paint",
+      "negativePrompt": "photorealistic, digital art, vector, modern, clean lines, photo"
+    },
+    "logo": {
+      "name": "🛡️ Logo Design (Vector)",
+      "model": "flux",
+      "enhancePrompt": "vector logo, flat design, minimalist, white background, professional logo, illustrator, clean lines",
+      "negativePrompt": "complex, detailed, photo, realistic, 3d, gradient, shadow, messy"
+    }
   }
-}
+};
+
+console.log('✅ SYSTEM: ' + window.APP_CONFIG.welcomeMessage);
