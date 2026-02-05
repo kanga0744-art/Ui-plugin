@@ -3,58 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Olike Image Generator</title>
+    <title>Olike AI Studio</title>
+    
+    <!-- 
+      STRATEGI ANTI-GAGAL:
+      Load presets.js di HEAD. Browser akan menunda rendering BODY 
+      sampai file ini selesai dibaca. Ini menjamin data PRESET sudah ada
+      saat script utama berjalan.
+    -->
+    <script src="presets.js"></script>
+
     <style>
-        
-{ margin: 0; padding: 0; box-sizing: border-box; }
+      :root {
+        --primary: #00ffaa;
+        --bg: #0f0f13;
+        --card: #1a1a20;
+        --text: #ffffff;
+        --text-muted: #888899;
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      
       body {
-          font-family: -apple-system, sans-serif;
-          background: #1a1a1a;
-          color: #fff;
+          font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+          background: var(--bg);
+          color: var(--text);
           padding: 20px;
-          max-width: 800px;
-          margin: 0 auto;}
-      h1 { margin-bottom: 20px; color: #00d4aa; }.form-group { margin-bottom: 15px; }
-      label { display: block; margin-bottom: 5px; font-size: 14px; color: #aaa; }
-      input, select, button {
+          display: flex;
+          justify-content: center;
+          min-height: 100vh;
+      }
+
+      .container {
           width: 100%;
+          max-width: 500px;
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+      }
+      
+      header {
+          text-align: center;
+          margin-bottom: 10px;
+          border-bottom: 1px solid #333;
+          padding-bottom: 20px;
+      }
+
+      h1 { 
+          color: var(--primary); 
+          font-size: 24px;
+          letter-spacing: 1px;
+          margin-bottom: 5px;
+      }
+
+      .status-badge {
+          font-size: 11px;
+          background: #222;
+          padding: 4px 10px;
+          border-radius: 20px;
+          color: var(--text-muted);
+      }
+      .status-badge.active { color: var(--primary); border: 1px solid #004433; }
+      .status-badge.error { color: #ff5555; border: 1px solid #440000; }
+
+      .card {
+          background: var(--card);
+          padding: 20px;
+          border-radius: 16px;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      }
+      
+      label { 
+          display: block; 
+          margin-bottom: 8px; 
+          font-size: 13px; 
+          color: var(--text-muted); 
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+      }
+      
+      textarea, select {
+          width: 100%;
+          padding: 15px;
+          border-radius: 10px;
+          border: 1px solid #333;
+          background: #0a0a0c;
+          color: #fff;
+          font-size: 15px;
+          font-family: inherit;
+          transition: all 0.3s;
+      }
+
+      textarea { resize: vertical; min-height: 80px; }
+      
+      textarea:focus, select:focus {
+          outline: none;
+          border-color: var(--primary);
+          box-shadow: 0 0 15px rgba(0, 255, 170, 0.1);
+      }
+
+      button#generateBtn {
+          width: 100%;
+          padding: 18px;
+          border-radius: 12px;
+          background: var(--primary);
+          color: #000;
+          font-weight: 800;
+          font-size: 16px;
+          cursor: pointer;
+          border: none;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          transition: 0.2s;
+          margin-top: 10px;
+      }
+      
+      button#generateBtn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,255,170,0.3); }
+      button#generateBtn:active { transform: scale(0.98); }
+      button#generateBtn:disabled { background: #333; color: #666; cursor: wait; transform: none; box-shadow: none; }
+
+      #resultArea {
+          display: none; /* Hidden by default */
+          flex-direction: column;
+          gap: 15px;
+          animation: fadeIn 0.5s ease;
+      }
+
+      .image-wrapper {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 1/1;
+          background: #000;
+          border-radius: 12px;
+          overflow: hidden;
+          border: 1px solid #333;
+      }
+
+      .image-wrapper img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+      }
+
+      .actions {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+      }
+
+      .btn-secondary {
+          background: #333;
+          color: #fff;
+          border: none;
           padding: 12px;
           border-radius: 8px;
-          border: 1px solid #333;
-          background: #2a2a2a;
-          color: #fff;
-          font-size: 14px;}
-      button {
-          background: #00d4aa;
-          color: #000;
-          font-weight: bold;
           cursor: pointer;
-          border: none;}button:hover { background: #00b894; }button:disabled { background: #555; cursor: not-allowed; }#result { margin-top: 20px; text-align: center; }#result img {
-          max-width: 100%;
-          border-radius: 12px;
-          box-shadow: 0 10px 40px rgba(0,0,0,0.5);}.loading { color: #00d4aa; font-style: italic; }.error { color: #ff6b6b; }</style>
+          font-weight: 600;
+          text-align: center;
+          text-decoration: none;
+          font-size: 14px;
+          transition: 0.2s;
+      }
+      .btn-secondary:hover { background: #444; }
+
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
 </head>
 <body>
-    <h1>🎨 Olike Image Generator</h1>
 
-    <div class="form-group">
-<label>Preset Gaya:</label>
-        <select id="presetSelect">
-            <option value="">-- Pilih Preset --</option>
-        </select>
+    <div class="container">
+        <header>
+            <h1>Olike Studio</h1>
+            <div id="pluginStatus" class="status-badge">Memeriksa Plugin...</div>
+        </header>
+
+        <div class="card">
+            <div style="margin-bottom: 20px;">
+                <label for="promptInput">Prompt (Imajinasikan)</label>
+                <textarea id="promptInput" placeholder="Seekor kucing cybernetik di kota neon hujan..."></textarea>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label for="presetSelect">Gaya Visual (Dari Plugin)</label>
+                <select id="presetSelect">
+                    <option value="">-- Loading Presets... --</option>
+                </select>
+            </div>
+
+            <button id="generateBtn">⚡ Generate Image</button>
+        </div>
+
+        <!-- AREA HASIL -->
+        <div id="resultArea" class="card">
+            <div class="image-wrapper">
+                <img id="generatedImage" src="" alt="Result">
+            </div>
+            <div class="actions">
+                <a id="downloadBtn" href="#" target="_blank" class="btn-secondary" download>⬇️ Simpan</a>
+                <button id="shareBtn" class="btn-secondary" onclick="alert('Link tersalin!')">🔗 Copy Link</button>
+            </div>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label>Prompt:</label>
-        <input type="text" id="promptInput" placeholder="Contoh: kucing lucu memakai kacamata...">
-    </div>
-
-    <button id="generateBtn" onclick="generateImage()">
-        ✨ Generate Image
-    </button>
-
-    <div id="result"></div>
-
+    <!-- LOGIC UTAMA (Dimuat di akhir body) -->
     <script src="script.js"></script>
 </body>
 </html>
